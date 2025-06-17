@@ -1,0 +1,33 @@
+[
+    {
+      "moodRange": [1, 3],
+      "quote": "A book can be a light in the darkness.",
+      "activity": "Curl up somewhere warm with a story that brings comfort.",
+      "book": {
+        "title": "The Little Prince",
+        "author": "Antoine de Saint-Exupéry",
+        "link": "https://www.goodreads.com/book/show/157993.The_Little_Prince"
+      }
+    },
+    {
+      "moodRange": [4, 7],
+      "quote": "Books help us understand what we’re feeling.",
+      "activity": "Pick something reflective or poetic.",
+      "book": {
+        "title": "Norwegian Wood",
+        "author": "Haruki Murakami",
+        "link": "https://www.goodreads.com/book/show/11297.Norwegian_Wood"
+      }
+    },
+    {
+      "moodRange": [8, 10],
+      "quote": "Feed your joy with something beautiful or challenging.",
+      "activity": "Try an inspiring novel or bold nonfiction.",
+      "book": {
+        "title": "Braiding Sweetgrass",
+        "author": "Robin Wall Kimmerer",
+        "link": "https://www.goodreads.com/book/show/17465709-braiding-sweetgrass"
+      }
+    }
+  ]
+  
