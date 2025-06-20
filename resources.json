@@ -1,0 +1,47 @@
+{
+  "resources": [
+    {
+      "id": "q001",
+      "type": "quote",
+      "content": "Happiness depends upon ourselves.",
+      "author": "Aristotle",
+      "emotions": ["inspirational","happy"]
+    },
+    {
+      "id": "v001",
+      "type": "video",
+      "title": "15 Minute Guided Meditation to Release Suppressed Emotions",
+      "url": "https://www.youtube.com/watch?v=149tYQEhqvY&ab_channel=TheMindfulMovement",
+      "emotions": ["stressed", "anxious", "calm"]
+    },
+    {
+      "id": "a001",
+      "type": "article",
+      "title": "Tips to improve concentration",
+      "url": "https://www.health.harvard.edu/mind-and-mood/tips-to-improve-concentration",
+      "emotions": ["motivated",  "focused"]
+    },
+    {
+      "id": "q002",
+      "type": "quote",
+      "content": "The only thing we have to fear is fear itself.",
+      "author": "Franklin D. Roosevelt",
+      "emotions": ["fear", "anxious", "stressed"]
+    },
+   
+    {
+      "id": "v002",
+      "type": "video",
+      "title": "5 minute meditation for focus",
+      "url": "https://www.youtube.com/watch?v=zSkFFW--Ma0&ab_channel=GreatMeditation",
+      "emotions": ["calm", "focused"]
+    },
+    {
+      "id": "a002",
+      "type": "article",
+      "title": "Coping with Depression",
+      "url": "https://www.helpguide.org/mental-health/depression/coping-with-depression",
+      "emotions": [ "depressed"]
+    }
+  ]
+}
