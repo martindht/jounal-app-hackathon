@@ -31,27 +31,129 @@ const Journal = () => {
     setPrompt(selectedPrompt);
   };
 
+  // Helper function to get mood class+
+  const getMoodClass = (mood) => {
+    if (mood <= 3) return 'mood-low';
+    if (mood <= 7) return 'mood-medium';
+    return 'mood-high';
+  };
+
+  const getMoodText = (mood) => {
+    if (mood <= 3) return 'Struggling';
+    if (mood <= 4) return 'Low Energy';
+    if (mood <= 6) return 'Feeling OK';
+    if (mood <= 8) return 'Content';
+    return 'Amazing';
+  };
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Today's Journal</h1>
+    <div className="container">
+      {/* Header Section */}
+      <div className="journal-header">
+        <h1>Daily Reflection</h1>
+        <p>A  space for your thoughts and emotions ✨</p>
+      </div>
 
-      <PromptGenerator onSelect={handlePromptSelect} />
-      {prompt && <p className="text-sm text-gray-600 mb-2 italic">Prompt: {prompt}</p>}
+      {/* Main Journal Entry Section */}
+      <div className="card card-large">
+        {/* Prompt Section */}
+        <div className="mb-6">
+          <PromptGenerator onSelect={handlePromptSelect} />
+          {prompt && (
+            <div className="prompt-section">
+              <span className="prompt-label">Writing Prompt:</span>
+              <div className="prompt-text">"{prompt}"</div>
+            </div>
+          )}
+        </div>
 
-      <MoodSlider value={currentMood} onChange={setCurrentMood} />
+        {/* Mood Slider Section */}
+        <div className="mb-6">
+          <MoodSlider value={currentMood} onChange={setCurrentMood} />
+        </div>
 
-      <EntryForm onSubmit={handleSubmit} defaultPrompt={prompt} />
+        {/* Entry Form */}
+        <EntryForm onSubmit={handleSubmit} defaultPrompt={prompt} />
+      </div>
 
-      <h2 className="text-xl font-semibold mt-8 mb-4">Previous Entries (preview)</h2>
-      <ul className="space-y-3">
-        {entries.map(entry => (
-          <li key={entry.id} className="border p-4 rounded shadow-sm bg-white">
-            <div className="text-sm text-gray-500">{new Date(entry.date).toLocaleString()}</div>
-            <div className="text-base">{entry.text.slice(0, 100)}...</div>
-            <div className="text-xs mt-1 text-indigo-600">Mood: {entry.mood}</div>
-          </li>
-        ))}
-      </ul>
+      {/* Previous Entries Section */}
+      <div className="card card-large">
+        <div className="flex justify-between items-center mb-6">
+          <h2>Recent Reflections</h2>
+          {entries.length > 0 && (
+            <span style={{ 
+              fontSize: '0.875rem', 
+              color: 'var(--text-muted)', 
+              background: 'var(--bg-secondary)', 
+              padding: '0.25rem 0.75rem', 
+              borderRadius: '9999px',
+              border: '1px solid var(--border-primary)'
+            }}>
+              {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+            </span>
+          )}
+        </div>
+
+        {entries.length > 0 ? (
+          <div>
+            {entries.slice(0, 5).map(entry => (
+              <div key={entry.id} className="entry-card">
+                {/* Entry Header */}
+                <div className="entry-header">
+                  <div className="entry-date">
+                    {new Date(entry.date).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                  <span className={`mood-indicator ${getMoodClass(entry.mood)}`}>
+                    {getMoodText(entry.mood)}
+                  </span>
+                </div>
+
+                {/* Entry Content */}
+                <div className="entry-content">
+                  {entry.text.length > 150 
+                    ? `${entry.text.slice(0, 150)}...` 
+                    : entry.text
+                  }
+                </div>
+
+                {/* Entry Footer */}
+                {entry.promptUsed && (
+                  <div className="entry-footer">
+                    Prompt: "{entry.promptUsed.slice(0, 60)}..."
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {entries.length > 5 && (
+              <div className="text-center" style={{ paddingTop: '1rem' }}>
+                <a href="#" style={{ 
+                  color: 'var(--accent-primary)', 
+                  fontSize: '0.875rem', 
+                  fontWeight: '500' 
+                }}>
+                  View all {entries.length} reflections →
+                </a>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center" style={{ 
+            padding: '2rem', 
+            color: 'var(--text-muted)', 
+            fontStyle: 'italic' 
+          }}>
+            No journal entries yet. Start writing above!
+          </div>
+        )}
+      </div>
     </div>
   );
 };
