@@ -21,22 +21,20 @@ const NavBar = () => {
 
   return (
     <nav className="bg-white border-b px-6 py-4 flex justify-between items-center shadow-sm">
-      <div className="flex gap-6 text-blue-600 font-medium"> 
+      <div style={{ display: 'flex', gap: '1.5rem' }}>
         <Link to="/">Dashboard</Link>
         <Link to="/journal">Journal</Link>
         <Link to="/entries">Entries</Link>
       </div>
       {isAuthenticated && (
-        <button
-          onClick={logout}
-          className="text-sm text-red-600 hover:underline"
-        >
+        <button onClick={logout} className="text-sm text-red-600 hover:underline">
           Log out
         </button>
       )}
     </nav>
   );
 };
+
 
 const App = () => {
   return (
