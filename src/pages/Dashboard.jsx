@@ -43,52 +43,104 @@ const Dashboard = () => {
     .filter(e => e.timestamp);
 
   return (
-    <div className="mx-auto px-6 py-8 max-w-7xl text-center">
-      <h1 className="text-4xl font-bold text-gray-100 mb-2">Mood Dashboard</h1>
-      <p className="text-gray-400 text-lg mb-10">
+    <div style={styles.container}>
+      <h1 style={styles.h1}>Mood Dashboard</h1>
+      <p style={styles.subtitle}>
         Visualize your emotional patterns over time.
       </p>
 
       {entries.length > 0 ? (
         <>
-          {/* Side-by-side: Year in Pixels (left) and Mood Trends (right) */}
-          <section className="two-col mb-12">
-            <div className="text-left">
+          {/* Side-by-side: Year in Pixels (left) and right column (Suggested + Summary + Trends) */}
+          <section className="two-col" style={styles.section}>
+            {/* Left column */}
+            <div style={{ textAlign: 'left' }}>
               <YearInPixels entries={pixelEntries} year={new Date().getFullYear()} />
             </div>
 
-            <div className="text-left">
-              <h2 className="text-2xl font-semibold mb-4">Mood Trends</h2>
-              <div className="w-full">
+            {/* Right column */}
+            <div style={{ textAlign: 'left' }}>
+              {/* Suggested for You */}
+              <div style={{ marginBottom: 24 }}>
+                <SuggestedContent mood={recentMood} />
+              </div>
+
+              {/* Mood Summary */}
+              <div style={{ marginBottom: 32 }}>
+                <h2 style={styles.h2}>Mood Summary</h2>
+                <p style={styles.summaryText}>
+                  Average Mood Score: <strong>{stats?.avg}</strong> / 10
+                </p>
+                <ul style={styles.summaryList}>
+                  {stats && Object.entries(stats.moodDist).map(([band, count]) => (
+                    <li key={band}>
+                      <span style={{ fontWeight: 600 }}>{band}</span> Mood Days: {count}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Mood Trends (extra space on the right) */}
+              <h2 style={styles.h2}>Mood Trends</h2>
+              <div style={{ width: '100%', paddingRight: '6rem' }}>
                 <MoodChart data={entries} />
               </div>
             </div>
           </section>
-
-          {/* Summary below */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Mood Summary</h2>
-            <p className="text-lg text-gray-200">
-              Average Mood Score: <strong>{stats?.avg}</strong> / 10
-            </p>
-            <ul className="mt-4 list-disc list-inside text-sm text-gray-300 text-left inline-block">
-              {stats && Object.entries(stats.moodDist).map(([band, count]) => (
-                <li key={band}>
-                  <span className="font-medium">{band}</span> Mood Days: {count}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <SuggestedContent mood={recentMood} />
         </>
       ) : (
-        <p className="text-gray-400 italic text-lg">
+        <p style={styles.emptyState}>
           No journal entries yet. Write your first one to see mood stats here!
         </p>
       )}
     </div>
   );
+};
+
+const styles = {
+  container: {
+    maxWidth: '1120px',        // ~7xl-ish
+    margin: '0 auto',
+    padding: '32px 24px',
+    textAlign: 'center',
+  },
+  h1: {
+    fontSize: '2.25rem',
+    fontWeight: 700,
+    color: '#f3f4f6',
+    margin: '0 0 8px',
+  },
+  subtitle: {
+    color: '#9ca3af',
+    fontSize: '1.125rem',
+    margin: '0 0 40px',
+  },
+  section: {
+    marginBottom: '48px',
+  },
+  h2: {
+    fontSize: '1.5rem',
+    fontWeight: 600,
+    margin: '0 0 16px',
+    color: '#e5e7eb',
+  },
+  summaryText: {
+    fontSize: '1.125rem',
+    color: '#e5e7eb',
+    margin: 0,
+  },
+  summaryList: {
+    marginTop: '16px',
+    listStyle: 'disc',
+    paddingInlineStart: '1.25rem',
+    fontSize: '0.875rem',
+    color: '#d1d5db',
+  },
+  emptyState: {
+    color: '#9ca3af',
+    fontStyle: 'italic',
+    fontSize: '1.125rem',
+  },
 };
 
 export default Dashboard;
