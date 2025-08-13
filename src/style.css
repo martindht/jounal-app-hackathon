@@ -355,11 +355,39 @@ nav a:hover::after {
 }
 
 /* ================================
+   Year in Pixels
+   ================================ */
+   .pixel {
+    border-radius: 3px;
+    background: #4b5563;               /* lighter empty (gray-600) */
+    outline: 1px solid rgba(255,255,255,.06);
+  }
+  .pixel.blank { background: transparent; outline: none; }
+  .legend-swatch {
+    width: 14px; height: 14px; border-radius: 3px;
+    background: #4b5563; display: inline-block;
+    outline: 1px solid rgba(255,255,255,.06);
+  }
+  
+  
+
+
+/* ================================
    UTILITY CLASSES
    ================================ */
 
 .flex {
   display: flex;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;            /* space between left and right */
+  align-items: start;
+}
+@media (min-width: 1024px) { /* lg and up */
+  .two-col { grid-template-columns: 1fr 1fr; }
 }
 
 .flex-col {
