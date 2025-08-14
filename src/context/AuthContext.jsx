@@ -1,45 +1,49 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { auth, provider, signInWithPopup, signOut, onAuthStateChanged } from "../firebase";
 
-// Create the context
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-// Custom hook for easier usage
 export const useAuth = () => useContext(AuthContext);
 
-// Context provider
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);  // null if not logged in
+  const [user, setUser] = useState(null);       
+  const [idToken, setIdToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Try to load user from localStorage on first load
-    const storedUser = localStorage.getItem('journal-user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      setUser(u);
+      if (u) {
+        const token = await u.getIdToken();  
+        setIdToken(token);
+      } else {
+        setIdToken(null);
+      }
+      setLoading(false);
+    });
+    return () => unsub();
   }, []);
 
-  const login = (username, password) => {
-    // Simulated auth logic — replace with real API call later
-    if (username === 'test' && password === '1234') {
-      const userObj = { username };
-      setUser(userObj);
-      localStorage.setItem('journal-user', JSON.stringify(userObj));
-      return true;
-    }
-    return false;
+  const login = async () => {
+    await signInWithPopup(auth, provider);      
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('journal-user');
+  const logout = async () => {
+    await signOut(auth);                       
   };
 
-  const value = {
+  const value = useMemo(() => ({
     user,
+    idToken,
     isAuthenticated: !!user,
+    loading,                                   
     login,
     logout,
-  };
+  }), [user, idToken, loading]);
+
+  //  placeholder during initial auth check 
+  // prolly get rid of later idk 
+  if (loading) return <div style={{ height: 1 }} />;
 
   return (
     <AuthContext.Provider value={value}>

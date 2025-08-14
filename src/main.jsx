@@ -12,7 +12,12 @@ import Login from './pages/Login';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <div style={{ padding: 24 }}>Loading authentication…</div>;
+  }
+
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
@@ -34,7 +39,6 @@ const NavBar = () => {
     </nav>
   );
 };
-
 
 const App = () => {
   return (
