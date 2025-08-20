@@ -1,43 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EntryForm from '../components/EntryForm';
 import MoodSlider from '../components/MoodSlider';
 import PromptGenerator from '../components/PromptGenerator';
+import { createEntry, listEntries } from '../api/entries';
+
+// server → UI mapper
+const mapToUi = (doc) => ({
+  id: doc._id,
+  text: doc.content,
+  date: doc.entryDate,
+  mood: doc.selfReport,
+  promptUsed: doc.prompt ?? null,
+});
 
 const Journal = () => {
   const [entries, setEntries] = useState([]);
   const [currentMood, setCurrentMood] = useState(5); // mood scale 1–10
   const [prompt, setPrompt] = useState('');
 
-  const handleSubmit = (entryText, date) => {
-    const newEntry = {
-      id: Date.now(),
-      text: entryText,
-      date: date || new Date().toISOString(),
-      mood: currentMood,
-      promptUsed: prompt,
-    };
+  useEffect(() => {
+    let on = true;
+    listEntries()
+      .then(({ data }) => { if (on) setEntries((data || []).map(mapToUi)); })
+      .catch((e) => console.error('Failed to load entries:', e));
+    return () => { on = false; };
+  }, []);
 
-    setEntries(prev => [newEntry, ...prev]);
+  const handlePromptSelect = (p) => setPrompt(p);
 
-    // Save to local storage
-    localStorage.setItem('journalEntries', JSON.stringify([newEntry, ...entries]));
-
-    // Reset fields
-    setPrompt('');
-    setCurrentMood(5);
+  const handleSubmit = async (entryText, date) => {
+    try {
+      await createEntry({
+        content: entryText,
+        selfReport: currentMood,
+        entryDate: date || new Date().toISOString(),
+        prompt: prompt || null,
+      });
+      const { data } = await listEntries();
+      setEntries((data || []).map(mapToUi));
+    } catch (e) {
+      console.error('Failed to create entry:', e);
+    }
   };
 
-  const handlePromptSelect = (selectedPrompt) => {
-    setPrompt(selectedPrompt);
-  };
-
-  // Helper function to get mood class+
   const getMoodClass = (mood) => {
     if (mood <= 3) return 'mood-low';
     if (mood <= 7) return 'mood-medium';
     return 'mood-high';
   };
-
   const getMoodText = (mood) => {
     if (mood <= 3) return 'Struggling';
     if (mood <= 4) return 'Low Energy';
@@ -62,7 +72,7 @@ const Journal = () => {
           {prompt && (
             <div className="prompt-section">
               <span className="prompt-label">Writing Prompt:</span>
-              <div className="prompt-text">"{prompt}"</div>
+              <div className="prompt-text">“{prompt}”</div>
             </div>
           )}
         </div>
@@ -70,25 +80,21 @@ const Journal = () => {
         {/* Mood Slider Section */}
         <div className="mb-6">
           <MoodSlider value={currentMood} onChange={setCurrentMood} />
+          <div className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium mood-indicator ${getMoodClass(currentMood)}`}>
+            {getMoodText(currentMood)} ({currentMood}/10)
+          </div>
         </div>
 
         {/* Entry Form */}
-        <EntryForm onSubmit={handleSubmit} defaultPrompt={prompt} />
+        <EntryForm onSubmit={handleSubmit} />
       </div>
 
-      {/* Previous Entries Section */}
-      <div className="card card-large">
-        <div className="flex justify-between items-center mb-6">
+      {/* Recent Entries / recap — now fed by server data */}
+      <div className="card mt-6">
+        <div className="section-header">
           <h2>Recent Reflections</h2>
           {entries.length > 0 && (
-            <span style={{ 
-              fontSize: '0.875rem', 
-              color: 'var(--text-muted)', 
-              background: 'var(--bg-secondary)', 
-              padding: '0.25rem 0.75rem', 
-              borderRadius: '9999px',
-              border: '1px solid var(--border-primary)'
-            }}>
+            <span className="badge" style={{ border: '1px solid var(--border-primary)' }}>
               {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
             </span>
           )}
@@ -98,7 +104,6 @@ const Journal = () => {
           <div>
             {entries.slice(0, 5).map(entry => (
               <div key={entry.id} className="entry-card">
-                {/* Entry Header */}
                 <div className="entry-header">
                   <div className="entry-date">
                     {new Date(entry.date).toLocaleDateString('en-US', {
@@ -115,41 +120,25 @@ const Journal = () => {
                   </span>
                 </div>
 
-                {/* Entry Content */}
                 <div className="entry-content">
-                  {entry.text.length > 150 
-                    ? `${entry.text.slice(0, 150)}...` 
-                    : entry.text
-                  }
+                  <p className="whitespace-pre-wrap">{entry.text}</p>
                 </div>
 
-                {/* Entry Footer */}
                 {entry.promptUsed && (
-                  <div className="entry-footer">
-                    Prompt: "{entry.promptUsed.slice(0, 60)}..."
+                  <div className="prompt-section" style={{ marginTop: '0.5rem' }}>
+                    <span className="prompt-label">Prompt</span>
+                    <div className="prompt-text">
+                      {entry.promptUsed.length > 120
+                        ? `“${entry.promptUsed.slice(0, 120)}…”`
+                        : `“${entry.promptUsed}”`}
+                    </div>
                   </div>
                 )}
               </div>
             ))}
-
-            {entries.length > 5 && (
-              <div className="text-center" style={{ paddingTop: '1rem' }}>
-                <a href="#" style={{ 
-                  color: 'var(--accent-primary)', 
-                  fontSize: '0.875rem', 
-                  fontWeight: '500' 
-                }}>
-                  View all {entries.length} reflections →
-                </a>
-              </div>
-            )}
           </div>
         ) : (
-          <div className="text-center" style={{ 
-            padding: '2rem', 
-            color: 'var(--text-muted)', 
-            fontStyle: 'italic' 
-          }}>
+          <div className="text-center" style={{ padding: '2rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
             No journal entries yet. Start writing above!
           </div>
         )}

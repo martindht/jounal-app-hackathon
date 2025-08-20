@@ -2,19 +2,35 @@ import React, { useEffect, useState } from 'react';
 import MoodChart from '../components/MoodChart';
 import SuggestedContent from '../components/SuggestedContent';
 import YearInPixels from '../components/YearInPixels';
+import { listEntries } from '../api/entries';
 
 const Dashboard = () => {
   const [entries, setEntries] = useState([]);
   const [recentMood, setRecentMood] = useState(5); // default neutral
 
-  useEffect(() => {
-    const stored = localStorage.getItem('journalEntries');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setEntries(parsed);
-      if (parsed.length > 0) setRecentMood(parsed[0].mood); // assume most recent first
-    }
-  }, []);
+useEffect(() => {
+  let on = true;
+  listEntries()
+    .then(({ data }) => {
+      if (!on) return;
+      // Map server docs -> the shape your Dashboard already expects
+      const ui = (data || []).map(doc => ({
+        id: doc._id,
+        text: doc.content,
+        date: doc.entryDate,           // ISO string
+        mood: doc.selfReport,          // number 1..10
+        promptUsed: doc.prompt ?? null
+      }));
+      setEntries(ui);
+      if (ui.length > 0) setRecentMood(ui[0].mood); // most recent first
+    })
+    .catch(err => {
+      console.error('Failed to load entries for dashboard:', err);
+      setEntries([]); // fail closed
+    });
+  return () => { on = false; };
+}, []);
+
 
   const getMoodStats = () => {
     if (!entries.length) return null;
