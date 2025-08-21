@@ -11,7 +11,11 @@ if (!admin.apps.length) {
   });
 }
 
-// Named export 
+/**
+ * Verifies Firebase ID token from the Authorization header.
+ * expects: authorization: Bearer <token>
+ * on success, it sets sets req.user = { uid, email? }
+ */
 export async function requireAuth(req, res, next) {
   try {
     const hdr = req.headers.authorization || "";

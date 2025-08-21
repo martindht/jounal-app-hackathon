@@ -11,11 +11,6 @@ export const getEntry = (id) => api(`/api/v1/entries/${id}`);
 export const createEntry = (payload) =>
   api(`/api/v1/entries`, { method: "POST", body: JSON.stringify(payload) });
 
-export const updateEntry = (id, patch) =>
-  api(`/api/v1/entries/${id}`, { method: "PATCH", body: JSON.stringify(patch) });
-
-export const deleteEntry = (id) => api(`/api/v1/entries/${id}`, { method: "DELETE" });
-
 export const weeklySummary = (params = {}) => {
   const qs = new URLSearchParams(params).toString();
   return api(`/api/v1/summary/weekly${qs ? `?${qs}` : ""}`);

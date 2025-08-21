@@ -4,7 +4,10 @@ import Entry from "../models/Entry.js";
 
 const router = Router();
 
-/** Create */
+/**
+ * POST /api/v1/entries
+ * Body: { content: string, selfReport: number, entryDate: ISO, prompt? , sentimentScore? }
+ */
 router.post("/", requireAuth, async (req, res) => {
   try {
     const { content, selfReport, entryDate, prompt = null, sentimentScore = null } = req.body || {};
@@ -12,13 +15,16 @@ router.post("/", requireAuth, async (req, res) => {
     if (!content || typeof content !== "string" || !content.trim()) {
       return res.status(400).json({ error: "content is required" });
     }
-    const sr = Number(selfReport);
-    if (!Number.isFinite(sr) || sr < 1 || sr > 10) {
-      return res.status(400).json({ error: "selfReport must be 1..10" });
-    }
+
+    // Coerce and clamp mood to 1..10 in case someone bypasses the UI
+    let sr = Number(selfReport);
+    if (!Number.isFinite(sr)) sr = 5;
+    sr = Math.max(1, Math.min(10, sr));
+
+    // Coerce date; fallback to now if invalid
     const dt = new Date(entryDate || Date.now());
     if (isNaN(dt.getTime())) {
-      return res.status(400).json({ error: "entryDate must be ISO date/time" });
+      dt.setTime(Date.now());
     }
 
     const doc = await Entry.create({
@@ -37,7 +43,11 @@ router.post("/", requireAuth, async (req, res) => {
   }
 });
 
-/** List */
+/**
+ * GET /api/v1/entries
+ * Query: from?, to?, limit?
+ * Returns newest → oldest.
+ */
 router.get("/", requireAuth, async (req, res) => {
   try {
     const { from, to, limit = 100 } = req.query || {};
@@ -55,9 +65,11 @@ router.get("/", requireAuth, async (req, res) => {
       }
     }
 
+    const lim = Math.min(Math.max(Number(limit) || 100, 1), 500);
+
     const docs = await Entry.find(q)
       .sort({ entryDate: -1 })
-      .limit(Math.min(Number(limit) || 100, 500));
+      .limit(lim);
 
     return res.json({ data: docs });
   } catch (err) {
@@ -66,60 +78,15 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-/** Read one */
+/**
+ * (Optional) GET /api/v1/entries/:id
+ * Leaving this in for now in case we want to display one at a time
+ */
 router.get("/:id", requireAuth, async (req, res) => {
   try {
     const doc = await Entry.findOne({ _id: req.params.id, uid: req.user.uid });
     if (!doc) return res.status(404).json({ error: "Not found" });
     return res.json({ data: doc });
-  } catch (_err) {
-    return res.status(400).json({ error: "Invalid id" });
-  }
-});
-
-/** Update (owner-only) */
-router.patch("/:id", requireAuth, async (req, res) => {
-  try {
-    const updates = {};
-    if (typeof req.body.content === "string" && req.body.content.trim()) {
-      updates.content = req.body.content.trim();
-    }
-    if (req.body.selfReport != null) {
-      const sr = Number(req.body.selfReport);
-      if (!Number.isFinite(sr) || sr < 1 || sr > 10) {
-        return res.status(400).json({ error: "selfReport must be 1..10" });
-      }
-      updates.selfReport = sr;
-    }
-    if (req.body.entryDate) {
-      const d = new Date(req.body.entryDate);
-      if (isNaN(d.getTime())) return res.status(400).json({ error: "entryDate must be ISO date/time" });
-      updates.entryDate = d;
-    }
-    if (req.body.prompt !== undefined) updates.prompt = req.body.prompt || null;
-    if (req.body.sentimentScore !== undefined) {
-      updates.sentimentScore = typeof req.body.sentimentScore === "number" ? req.body.sentimentScore : null;
-    }
-
-    const doc = await Entry.findOneAndUpdate(
-      { _id: req.params.id, uid: req.user.uid },
-      { $set: updates },
-      { new: true }
-    );
-
-    if (!doc) return res.status(404).json({ error: "Not found" });
-    return res.json({ data: doc });
-  } catch (_err) {
-    return res.status(400).json({ error: "Invalid id" });
-  }
-});
-
-/** Delete (owner-only) */
-router.delete("/:id", requireAuth, async (req, res) => {
-  try {
-    const out = await Entry.deleteOne({ _id: req.params.id, uid: req.user.uid });
-    if (!out.deletedCount) return res.status(404).json({ error: "Not found" });
-    return res.status(204).send();
   } catch (_err) {
     return res.status(400).json({ error: "Invalid id" });
   }
