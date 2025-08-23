@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import Entry from "../models/Entry.js";
+import { sentimentCompound } from "../lib/nlp.js";
 
 const router = Router();
 
@@ -10,7 +11,7 @@ const router = Router();
  */
 router.post("/", requireAuth, async (req, res) => {
   try {
-    const { content, selfReport, entryDate, prompt = null, sentimentScore = null } = req.body || {};
+    const { content, selfReport, entryDate, prompt = null } = req.body || {};
 
     if (!content || typeof content !== "string" || !content.trim()) {
       return res.status(400).json({ error: "content is required" });
@@ -27,13 +28,17 @@ router.post("/", requireAuth, async (req, res) => {
       dt.setTime(Date.now());
     }
 
+    // --- Sentiment Analysis (Vader) ---
+    const sentimentScore = sentimentCompound(content);
+
+    // Create entry with computed sentimentScore
     const doc = await Entry.create({
       uid: req.user.uid,
       content: content.trim(),
       selfReport: sr,
       entryDate: dt,
       prompt,
-      sentimentScore: typeof sentimentScore === "number" ? sentimentScore : null,
+      sentimentScore,
     });
 
     return res.status(201).json({ data: doc });

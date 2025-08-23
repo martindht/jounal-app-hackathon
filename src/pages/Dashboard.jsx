@@ -62,7 +62,7 @@ useEffect(() => {
     <div style={styles.container}>
       <h1 style={styles.h1}>Mood Dashboard</h1>
       <p style={styles.subtitle}>
-        Visualize your emotional patterns over time.
+        Visualize your emotional patterns over time 💫
       </p>
 
       {entries.length > 0 ? (

@@ -11,6 +11,7 @@ const mapToUi = (doc) => ({
   date: doc.entryDate,
   mood: doc.selfReport,
   promptUsed: doc.prompt ?? null,
+  sentimentScore: doc.sentimentScore ?? null,
 });
 
 const Journal = () => {
@@ -55,6 +56,16 @@ const Journal = () => {
     if (mood <= 8) return 'Content';
     return 'Amazing';
   };
+
+  const bandFromSentiment = (s) =>
+  s == null ? null : s <= -0.25 ? "sad" : s >= 0.25 ? "happy" : "neutral";
+
+const sentimentLabel = (b) =>
+  b === "happy" ? "Happy" : b === "sad" ? "Sad" : "Neutral";
+
+const sentimentClass = (b) =>
+  b === "happy" ? "ai-happy" : b === "sad" ? "ai-sad" : "ai-neutral";
+
 
   return (
     <div className="container">
@@ -102,40 +113,57 @@ const Journal = () => {
 
         {entries.length > 0 ? (
           <div>
-            {entries.slice(0, 5).map(entry => (
-              <div key={entry.id} className="entry-card">
-                <div className="entry-header">
-                  <div className="entry-date">
-                    {new Date(entry.date).toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </div>
-                  <span className={`mood-indicator ${getMoodClass(entry.mood)}`}>
-                    {getMoodText(entry.mood)}
-                  </span>
-                </div>
+{entries.slice(0, 5).map(entry => (
+  <div key={entry.id} className="entry-card">
+    <div className="entry-header">
+      <div className="entry-date">
+        {new Date(entry.date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })}
+      </div>
 
-                <div className="entry-content">
-                  <p className="whitespace-pre-wrap">{entry.text}</p>
-                </div>
+      <div className="entry-pills">
+        <span className={`mood-indicator ${getMoodClass(entry.mood)}`}>
+          {getMoodText(entry.mood)}
+        </span>
 
-                {entry.promptUsed && (
-                  <div className="prompt-section" style={{ marginTop: '0.5rem' }}>
-                    <span className="prompt-label">Prompt</span>
-                    <div className="prompt-text">
-                      {entry.promptUsed.length > 120
-                        ? `“${entry.promptUsed.slice(0, 120)}…”`
-                        : `“${entry.promptUsed}”`}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+        {entry.sentimentScore != null && (
+          <span
+            className={`ai-indicator ${
+              bandFromSentiment(entry.sentimentScore) === "happy"
+                ? "ai-happy"
+                : bandFromSentiment(entry.sentimentScore) === "sad"
+                ? "ai-sad"
+                : "ai-neutral"
+            }`}
+          >
+            AI Mood: {sentimentLabel(bandFromSentiment(entry.sentimentScore))}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <div className="entry-content">
+      <p className="whitespace-pre-wrap">{entry.text}</p>
+    </div>
+
+    {entry.promptUsed && (
+      <div className="prompt-section" style={{ marginTop: '0.5rem' }}>
+        <span className="prompt-label">Prompt</span>
+        <div className="prompt-text">
+          {entry.promptUsed.length > 120
+            ? `“${entry.promptUsed.slice(0, 120)}…”`
+            : `“${entry.promptUsed}”`}
+        </div>
+      </div>
+    )}
+  </div>
+))}
           </div>
         ) : (
           <div className="text-center" style={{ padding: '2rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>

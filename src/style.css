@@ -72,12 +72,11 @@ body {
 
 /* Main page titles */
 h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-primary);
-  margin: 0 0 0.5rem 0;
-  letter-spacing: -0.025em; 
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
 }
 
 /* Section headings */
@@ -271,6 +270,39 @@ nav a:hover::after {
   font-style: italic;
 }
 
+.entry-pills {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ai-indicator {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.ai-indicator.ai-happy {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+.ai-indicator.ai-neutral {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+.ai-indicator.ai-sad {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+
 /* ================================
    MOOD INDICATOR SYSTEM
    ================================ */
@@ -327,6 +359,67 @@ nav a:hover::after {
   font-style: italic;
   line-height: 1.5;
 }
+
+
+/* ================================
+  ENTRY FORM SECTION
+   ================================ */
+.entry-form { display: grid; gap: .5rem; }
+.input-label { font-weight: 600; color: var(--text-secondary); }
+
+.textarea-wrap {
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.journal-textarea {
+  width: 100%;
+  padding: 1rem 1rem 0.75rem;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: transparent;
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: .75rem; padding: .5rem .5rem .6rem; border-top: 1px solid var(--border-primary);
+  background: var(--bg-secondary);
+}
+.toolbar .left, .toolbar .right { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+
+.mic-btn {
+  font-weight: 600; font-size: .9rem;
+  padding: .45rem .7rem; border-radius: 9999px;
+  border: 1px solid var(--border-primary); cursor: pointer;
+}
+.mic-btn:hover { background: #111827; }
+.mic-btn.on { border-color: #ef4444; color: #b91c1c; background: rgba(239,68,68,.08); }
+
+.date-input {
+  border: 1px solid var(--border-primary);
+  background: #111827; color: var(--text-primary);
+  padding: .4rem .55rem; border-radius: 8px; font-size: .9rem;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(2);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btn-primary {
+  border: 1px solid #111827; background: #111827; color: #fff;
+  padding: .5rem .8rem; border-radius: 10px; font-weight: 700; cursor: pointer;
+}
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+
+
 
 /* ================================
    EMPTY STATE SECTION - No journal entries yet
