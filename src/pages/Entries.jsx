@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { listEntries } from '../api/entries';
+
+const mapToUi = (doc) => ({
+  id: doc._id,
+  text: doc.content,
+  date: doc.entryDate,
+  mood: doc.selfReport,
+  promptUsed: doc.prompt ?? null,
+});
 
 const Entries = () => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('journalEntries');
-    if (stored) {
-      setEntries(JSON.parse(stored));
-    }
+    let on = true;
+    listEntries()
+      .then(({ data }) => {
+        if (on) setEntries((data || []).map(mapToUi));
+      })
+      .catch((e) => console.error("Failed to load entries:", e));
+    return () => { on = false; };
   }, []);
 
   return (
@@ -15,7 +27,7 @@ const Entries = () => {
       <h1 className="text-3xl font-bold mb-6">Past Journal Entries</h1>
 
       {entries.length === 0 ? (
-        <p className="text-gray-600 italic">No entries saved yet. Start journaling!</p>
+        <p className="text-gray-600 italic">No entries yet. Start journaling!</p>
       ) : (
         <ul className="space-y-4">
           {entries.map((entry) => (

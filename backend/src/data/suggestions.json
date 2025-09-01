@@ -1,0 +1,41 @@
+{
+  "happy": {
+    "quotes": [
+      "Happiness is not by chance, but by choice.",
+      "Collect moments, not things."
+    ],
+    "videos": [
+      "https://www.youtube.com/watch?v=ZbZSe6N_BXs"
+    ],
+    "actions": [
+      "Share your win with a friend.",
+      "Capture one photo that represents today."
+    ]
+  },
+  "neutral": {
+    "quotes": [
+      "Small steps still move you forward.",
+      "Clarity comes from action, not thought."
+    ],
+    "videos": [
+      "https://www.youtube.com/watch?v=KxGRhd_iWuE"
+    ],
+    "actions": [
+      "Write three things you’re curious about.",
+      "Take a 10-minute walk."
+    ]
+  },
+  "sad": {
+    "quotes": [
+      "This too shall pass.",
+      "Be gentle with yourself; you’re doing the best you can."
+    ],
+    "videos": [
+      "https://www.youtube.com/watch?v=ZKo5e5QbQmE"
+    ],
+    "actions": [
+      "Text someone you trust.",
+      "Write one thing that helped you before."
+    ]
+  }
+}

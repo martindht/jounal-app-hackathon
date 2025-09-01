@@ -1,57 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EntryForm from '../components/EntryForm';
 import MoodSlider from '../components/MoodSlider';
 import PromptGenerator from '../components/PromptGenerator';
+import { createEntry, listEntries } from '../api/entries';
+
+// server → UI mapper
+const mapToUi = (doc) => ({
+  id: doc._id,
+  text: doc.content,
+  date: doc.entryDate,
+  mood: doc.selfReport,
+  promptUsed: doc.prompt ?? null,
+  sentimentScore: doc.sentimentScore ?? null,
+});
 
 const Journal = () => {
   const [entries, setEntries] = useState([]);
   const [currentMood, setCurrentMood] = useState(5); // mood scale 1–10
   const [prompt, setPrompt] = useState('');
 
-  const handleSubmit = (entryText, date) => {
-    const newEntry = {
-      id: Date.now(),
-      text: entryText,
-      date: date || new Date().toISOString(),
-      mood: currentMood,
-      promptUsed: prompt,
-    };
+  useEffect(() => {
+    let on = true;
+    listEntries()
+      .then(({ data }) => { if (on) setEntries((data || []).map(mapToUi)); })
+      .catch((e) => console.error('Failed to load entries:', e));
+    return () => { on = false; };
+  }, []);
 
-    setEntries(prev => [newEntry, ...prev]);
+  const handlePromptSelect = (p) => setPrompt(p);
 
-    // Save to local storage
-    localStorage.setItem('journalEntries', JSON.stringify([newEntry, ...entries]));
-
-    // Reset fields
-    setPrompt('');
-    setCurrentMood(5);
+  const handleSubmit = async (entryText, date) => {
+    try {
+      await createEntry({
+        content: entryText,
+        selfReport: currentMood,
+        entryDate: date || new Date().toISOString(),
+        prompt: prompt || null,
+      });
+      const { data } = await listEntries();
+      setEntries((data || []).map(mapToUi));
+    } catch (e) {
+      console.error('Failed to create entry:', e);
+    }
   };
 
-  const handlePromptSelect = (selectedPrompt) => {
-    setPrompt(selectedPrompt);
+  const getMoodClass = (mood) => {
+    if (mood <= 3) return 'mood-low';
+    if (mood <= 7) return 'mood-medium';
+    return 'mood-high';
   };
+  const getMoodText = (mood) => {
+    if (mood <= 3) return 'Struggling';
+    if (mood <= 4) return 'Low Energy';
+    if (mood <= 6) return 'Feeling OK';
+    if (mood <= 8) return 'Content';
+    return 'Amazing';
+  };
+
+  const bandFromSentiment = (s) =>
+  s == null ? null : s <= -0.25 ? "sad" : s >= 0.25 ? "happy" : "neutral";
+
+const sentimentLabel = (b) =>
+  b === "happy" ? "Happy" : b === "sad" ? "Sad" : "Neutral";
+
+const sentimentClass = (b) =>
+  b === "happy" ? "ai-happy" : b === "sad" ? "ai-sad" : "ai-neutral";
+
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Today's Journal</h1>
+    <div className="container">
+      {/* Header Section */}
+      <div className="journal-header">
+        <h1>Daily Reflection</h1>
+        <p>A  space for your thoughts and emotions ✨</p>
+      </div>
 
-      <PromptGenerator onSelect={handlePromptSelect} />
-      {prompt && <p className="text-sm text-gray-600 mb-2 italic">Prompt: {prompt}</p>}
+      {/* Main Journal Entry Section */}
+      <div className="card card-large">
+        {/* Prompt Section */}
+        <div className="mb-6">
+          <PromptGenerator onSelect={handlePromptSelect} />
+          {prompt && (
+            <div className="prompt-section">
+              <span className="prompt-label">Writing Prompt:</span>
+              <div className="prompt-text">“{prompt}”</div>
+            </div>
+          )}
+        </div>
 
-      <MoodSlider value={currentMood} onChange={setCurrentMood} />
+        {/* Mood Slider Section */}
+        <div className="mb-6">
+          <MoodSlider value={currentMood} onChange={setCurrentMood} />
+          <div className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium mood-indicator ${getMoodClass(currentMood)}`}>
+            {getMoodText(currentMood)} ({currentMood}/10)
+          </div>
+        </div>
 
-      <EntryForm onSubmit={handleSubmit} defaultPrompt={prompt} />
+        {/* Entry Form */}
+        <EntryForm onSubmit={handleSubmit} />
+      </div>
 
-      <h2 className="text-xl font-semibold mt-8 mb-4">Previous Entries (preview)</h2>
-      <ul className="space-y-3">
-        {entries.map(entry => (
-          <li key={entry.id} className="border p-4 rounded shadow-sm bg-white">
-            <div className="text-sm text-gray-500">{new Date(entry.date).toLocaleString()}</div>
-            <div className="text-base">{entry.text.slice(0, 100)}...</div>
-            <div className="text-xs mt-1 text-indigo-600">Mood: {entry.mood}</div>
-          </li>
-        ))}
-      </ul>
+      {/* Recent Entries / recap — now fed by server data */}
+      <div className="card mt-6">
+        <div className="section-header">
+          <h2>Recent Reflections</h2>
+          {entries.length > 0 && (
+            <span className="badge" style={{ border: '1px solid var(--border-primary)' }}>
+              {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+            </span>
+          )}
+        </div>
+
+        {entries.length > 0 ? (
+          <div>
+{entries.slice(0, 5).map(entry => (
+  <div key={entry.id} className="entry-card">
+    <div className="entry-header">
+      <div className="entry-date">
+        {new Date(entry.date).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })}
+      </div>
+
+      <div className="entry-pills">
+        <span className={`mood-indicator ${getMoodClass(entry.mood)}`}>
+          {getMoodText(entry.mood)}
+        </span>
+
+        {entry.sentimentScore != null && (
+          <span
+            className={`ai-indicator ${
+              bandFromSentiment(entry.sentimentScore) === "happy"
+                ? "ai-happy"
+                : bandFromSentiment(entry.sentimentScore) === "sad"
+                ? "ai-sad"
+                : "ai-neutral"
+            }`}
+          >
+            AI Mood: {sentimentLabel(bandFromSentiment(entry.sentimentScore))}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <div className="entry-content">
+      <p className="whitespace-pre-wrap">{entry.text}</p>
+    </div>
+
+    {entry.promptUsed && (
+      <div className="prompt-section" style={{ marginTop: '0.5rem' }}>
+        <span className="prompt-label">Prompt</span>
+        <div className="prompt-text">
+          {entry.promptUsed.length > 120
+            ? `“${entry.promptUsed.slice(0, 120)}…”`
+            : `“${entry.promptUsed}”`}
+        </div>
+      </div>
+    )}
+  </div>
+))}
+          </div>
+        ) : (
+          <div className="text-center" style={{ padding: '2rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+            No journal entries yet. Start writing above!
+          </div>
+        )}
+      </div>
     </div>
   );
 };

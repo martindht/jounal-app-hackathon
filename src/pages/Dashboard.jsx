@@ -1,81 +1,162 @@
 import React, { useEffect, useState } from 'react';
 import MoodChart from '../components/MoodChart';
 import SuggestedContent from '../components/SuggestedContent';
+import YearInPixels from '../components/YearInPixels';
+import { listEntries } from '../api/entries';
 
 const Dashboard = () => {
   const [entries, setEntries] = useState([]);
   const [recentMood, setRecentMood] = useState(5); // default neutral
 
-  useEffect(() => {
-    const stored = localStorage.getItem('journalEntries');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setEntries(parsed);
+useEffect(() => {
+  let on = true;
+  listEntries()
+    .then(({ data }) => {
+      if (!on) return;
+      // Map server docs -> the shape your Dashboard already expects
+      const ui = (data || []).map(doc => ({
+        id: doc._id,
+        text: doc.content,
+        date: doc.entryDate,           // ISO string
+        mood: doc.selfReport,          // number 1..10
+        promptUsed: doc.prompt ?? null
+      }));
+      setEntries(ui);
+      if (ui.length > 0) setRecentMood(ui[0].mood); // most recent first
+    })
+    .catch(err => {
+      console.error('Failed to load entries for dashboard:', err);
+      setEntries([]); // fail closed
+    });
+  return () => { on = false; };
+}, []);
 
-      if (parsed.length > 0) {
-        setRecentMood(parsed[0].mood); // assume most recent is at index 0
-      }
-    }
-  }, []);
 
   const getMoodStats = () => {
     if (!entries.length) return null;
-
     const moods = entries.map(e => e.mood);
     const avg = (moods.reduce((a, b) => a + b, 0) / moods.length).toFixed(2);
-
     const moodDist = moods.reduce((acc, mood) => {
       const band = mood <= 3 ? 'Low' : mood <= 7 ? 'Medium' : 'High';
       acc[band] = (acc[band] || 0) + 1;
       return acc;
     }, {});
-
     return { avg, moodDist };
   };
 
   const stats = getMoodStats();
 
+  // Normalize for <YearInPixels/>
+  const pixelEntries = entries
+    .map(e => ({
+      timestamp: e.timestamp ? new Date(e.timestamp)
+        : e.date ? new Date(e.date)
+        : e.createdAt ? new Date(e.createdAt)
+        : null,
+      selfReport: typeof e.mood === 'number' ? e.mood : undefined,
+      moodLabel: e.moodLabel || e.label || undefined,
+    }))
+    .filter(e => e.timestamp);
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 text-center">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">Mood Dashboard</h1>
-      <p className="text-gray-600 text-lg mb-8">
-        Visualize your emotional patterns over time.
+    <div style={styles.container}>
+      <h1 style={styles.h1}>Mood Dashboard</h1>
+      <p style={styles.subtitle}>
+        Visualize your emotional patterns over time 💫
       </p>
 
       {entries.length > 0 ? (
         <>
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Mood Over Time</h2>
-            <div className="flex justify-center">
-              <div className="w-full max-w-3xl">
+          {/* Side-by-side: Year in Pixels (left) and right column (Suggested + Summary + Trends) */}
+          <section className="two-col" style={styles.section}>
+            {/* Left column */}
+            <div style={{ textAlign: 'left' }}>
+              <YearInPixels entries={pixelEntries} year={new Date().getFullYear()} />
+            </div>
+
+            {/* Right column */}
+            <div style={{ textAlign: 'left' }}>
+              {/* Suggested for You */}
+              <div style={{ marginBottom: 24 }}>
+                <SuggestedContent mood={recentMood} />
+              </div>
+
+              {/* Mood Summary */}
+              <div style={{ marginBottom: 32 }}>
+                <h2 style={styles.h2}>Mood Summary</h2>
+                <p style={styles.summaryText}>
+                  Average Mood Score: <strong>{stats?.avg}</strong> / 10
+                </p>
+                <ul style={styles.summaryList}>
+                  {stats && Object.entries(stats.moodDist).map(([band, count]) => (
+                    <li key={band}>
+                      <span style={{ fontWeight: 600 }}>{band}</span> Mood Days: {count}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Mood Trends (extra space on the right) */}
+              <h2 style={styles.h2}>Mood Trends</h2>
+              <div style={{ width: '100%', paddingRight: '6rem' }}>
                 <MoodChart data={entries} />
               </div>
             </div>
           </section>
-
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Mood Summary</h2>
-            <p className="text-lg text-gray-800">
-              Average Mood Score: <strong>{stats.avg}</strong> / 10
-            </p>
-            <ul className="mt-4 list-disc list-inside text-sm text-gray-700 text-left inline-block">
-              {Object.entries(stats.moodDist).map(([band, count]) => (
-                <li key={band}>
-                  <span className="font-medium">{band}</span> Mood Days: {count}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <SuggestedContent mood={recentMood} />
         </>
       ) : (
-        <p className="text-gray-600 italic text-lg">
+        <p style={styles.emptyState}>
           No journal entries yet. Write your first one to see mood stats here!
         </p>
       )}
     </div>
   );
+};
+
+const styles = {
+  container: {
+    maxWidth: '1120px',        // ~7xl-ish
+    margin: '0 auto',
+    padding: '32px 24px',
+    textAlign: 'center',
+  },
+  h1: {
+    fontSize: '2.25rem',
+    fontWeight: 700,
+    color: '#f3f4f6',
+    margin: '0 0 8px',
+  },
+  subtitle: {
+    color: '#9ca3af',
+    fontSize: '1.125rem',
+    margin: '0 0 40px',
+  },
+  section: {
+    marginBottom: '48px',
+  },
+  h2: {
+    fontSize: '1.5rem',
+    fontWeight: 600,
+    margin: '0 0 16px',
+    color: '#e5e7eb',
+  },
+  summaryText: {
+    fontSize: '1.125rem',
+    color: '#e5e7eb',
+    margin: 0,
+  },
+  summaryList: {
+    marginTop: '16px',
+    listStyle: 'disc',
+    paddingInlineStart: '1.25rem',
+    fontSize: '0.875rem',
+    color: '#d1d5db',
+  },
+  emptyState: {
+    color: '#9ca3af',
+    fontStyle: 'italic',
+    fontSize: '1.125rem',
+  },
 };
 
 export default Dashboard;
