@@ -1,0 +1,431 @@
+{
+  "sad": {
+    "quotes": [
+      "Sometimes the bravest thing you can do is to keep going when you want to give up.",
+      "Courage doesn't always roar.",
+      "If you're going through hell, keep going.",
+      "No feeling is final.",
+      "Stars can't shine without darkness.",
+      "The wound is the place where the Light enters you.",
+      "\u201cI am not a product of my circumstances. I am a product of my decisions.\u201d",
+      "\u201cQuality means doing it right when no one is looking.\u201d",
+      "\u201cThe journey of a thousand miles begins with one step.\u201d",
+      "\u201cThe most effective way to do it, is to do it.\u201d",
+      "\u201cThink of many things, do one.\u201d",
+      "\u201cWe are what we repeatedly do. Excellence, therefore, is not an act. But a habit.\u201d",
+      "\u201cWhat we fear doing most is usually what we most need to do.\u201d",
+      "\u201cWork harder on you than everyone else and you will become unusually successful.\u201d",
+      "\u201cYou always have two choices: your commitment versus your fear.\u201d"
+    ],
+    "videos": [
+      {
+        "title": "Box breathing: calm feelings of stress & anxiety (NHS)",
+        "url": "https://www.youtube.com/watch?v=tEmt1Znux58"
+      },
+      {
+        "title": "20 Minute Guided Meditation for Reducing Anxiety and Stress--Clear the Clutter to Calm Down",
+        "url": "https://www.youtube.com/watch?v=MIr3RsUWrdo&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "Diaphragmatic Breathing for Anxiety Relief",
+        "url": "https://www.youtube.com/watch?v=ZRiUmi0esec"
+      },
+      {
+        "title": "Guided body scan for calm (UC San Diego Center for Mindfulness)",
+        "url": "https://www.youtube.com/watch?v=GNmnsDrLueE"
+      },
+      {
+        "title": "Meditation to Calm an Overactive Mind | Reduce Anxiety and Worry | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=wi2Q_7C1OfM&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=6&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "The 5-4-3-2-1 Method: A Grounding Exercise to Manage Anxiety",
+        "url": "https://www.youtube.com/watch?v=30VMIEmA114&ab_channel=ThePartnershipInEducation"
+      },
+      {
+        "title": "10-Minute Meditation For Anxiety | Goodful",
+        "url": "https://www.youtube.com/watch?v=O-6f5wQXSu8&ab_channel=Goodful"
+      },
+      {
+        "title": "15 Minute Meditation for Stress Relief and Building Confidence | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=-KMngzCWgTw&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=8&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "Be Your Own Best Friend: Self-Compassion for Stress Reduction",
+        "url": "https://www.youtube.com/watch?v=hziQjRpV4cA&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=9&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      },
+      {
+        "title": "Give me 8 minutes and I'll DELETE your fear of failure",
+        "url": "https://www.youtube.com/watch?v=Cw5bEL9rxXw&list=PLmNgDoNhKYeaYyhJL9vj0Vm0SNgyvcy_I&index=2&ab_channel=KimFoster%2CM.D"
+      },
+      {
+        "title": "How to cope with anxiety - a relaxation technique | NHS",
+        "url": "https://www.youtube.com/watch?v=3cXGt2d1RyQ&ab_channel=NHS"
+      },
+      {
+        "title": "How to deal with unhelpful thoughts | NHS",
+        "url": "https://www.youtube.com/watch?v=63zXqalSSFk&ab_channel=NHS"
+      },
+      {
+        "title": "Let Go of Thoughts of Worry to Relax | Deep Sleep Meditation | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=qXG2G_JfO9Q&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=5&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "Meditation for Anxiety",
+        "url": "https://www.youtube.com/watch?v=pdyTkv6V1dw&ab_channel=PsychHub"
+      },
+      {
+        "title": "Reduce Depression by Doing Things You Love",
+        "url": "https://www.youtube.com/watch?v=sTnTD2zK3UQ&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=8&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      }
+    ],
+    "articles": [
+      {
+        "title": "Cognitive Behavioral Therapy basics for depression (APA)",
+        "url": "https://www.apa.org/ptsd-guideline/patients-and-families/cognitive-behavioral"
+      },
+      {
+        "title": "Managing stress and anxiety: evidence\u2011based tips (APA)",
+        "url": "https://www.apa.org/topics/stress/tips"
+      },
+      {
+        "title": "Depression: symptoms, causes, and treatment (APA)",
+        "url": "https://www.apa.org/topics/depression"
+      },
+      {
+        "title": "Self\u2011help tips for depression (NHS)",
+        "url": "https://www.nhs.uk/mental-health/conditions/clinical-depression/self-care/"
+      },
+      {
+        "title": "Depression overview (Harvard Health)",
+        "url": "https://www.health.harvard.edu/topics/depression"
+      },
+      {
+        "title": "How to deal with depression in different ways (Verywell Health)",
+        "url": "https://www.verywellhealth.com/how-to-deal-with-depression-7693196"
+      },
+      {
+        "title": "7 Mood Boosters That Don\u2019t Cost a Thing",
+        "url": "https://www.healthline.com/health/mental-health/mood-boosters#takeaway"
+      },
+      {
+        "title": "Being in natural light improves mood, increases happiness",
+        "url": "https://www.uclahealth.org/news/article/being-in-natural-light-improves-mood-increases-happiness"
+      },
+      {
+        "title": "Boosting Your Mood",
+        "url": "https://www.hopkinsmedicine.org/health/wellness-and-prevention/boosting-your-mood"
+      },
+      {
+        "title": "Five lifestyle changes to enhance your mood and mental health",
+        "url": "https://theconversation.com/five-lifestyle-changes-to-enhance-your-mood-and-mental-health-102650"
+      },
+      {
+        "title": "How Food May Improve Your Mood",
+        "url": "https://www.ncbi.nlm.nih.gov/search/research-news/13453/"
+      },
+      {
+        "title": "How to Improve Mental Health",
+        "url": "https://medlineplus.gov/howtoimprovementalhealth.html"
+      },
+      {
+        "title": "How to improve your mood",
+        "url": "https://www.livescience.com/how-to-improve-your-mood"
+      },
+      {
+        "title": "Mind & Mood",
+        "url": "https://www.health.harvard.edu/topics/mind-and-mood"
+      },
+      {
+        "title": "Probiotics reduce negative mood over time: the value of daily self-reports in detecting effects",
+        "url": "https://www.nature.com/articles/s44184-025-00123-z"
+      }
+    ]
+  },
+  "neutral": {
+    "quotes": [
+      "Between stimulus and response there is a space. In that space is our power to choose our response.",
+      "Be curious, not judgmental.",
+      "Clarity comes from engagement, not thought.",
+      "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
+      "Feelings come and go like clouds in a windy sky. Conscious breathing is my anchor.",
+      "The quieter you become, the more you can hear.",
+      "\u201cDon\u2019t lament so much about how your career is going to turn out. You don\u2019t have a career. You have a life.\u201d",
+      "\u201cI am not a product of my circumstances. I am a product of my decisions.\u201d",
+      "\u201cIt\u2019s our choices\u2026that show what we truly are, far more than our abilities.\u201d",
+      "\u201cThe journey of a thousand miles begins with one step.\u201d",
+      "\u201cThe most effective way to do it, is to do it.\u201d",
+      "\u201cThink of many things, do one.\u201d",
+      "\u201cWe are what we repeatedly do. Excellence, therefore, is not an act. But a habit.\u201d",
+      "\u201cWork harder on you than everyone else and you will become unusually successful.\u201d",
+      "\u201cYou always have two choices: your commitment versus your fear.\u201d"
+    ],
+    "videos": [
+      {
+        "title": "3\u2011Minute Breathing Space (Oxford Mindfulness)",
+        "url": "https://www.youtube.com/watch?v=CVW_IE1nsKE"
+      },
+      {
+        "title": "Body Scan Mindfulness \u2013 UC San Diego CFM",
+        "url": "https://www.youtube.com/watch?v=cs_mUcrxzO8"
+      },
+      {
+        "title": "Find Inner Peace through Acceptance and Surrender While You Sleep | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=2lI00KF8PUA&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=4&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "Guided Audio & Video (UC San Diego Center for Mindfulness)",
+        "url": "https://cih.ucsd.edu/mindfulness/guided-audio-video"
+      },
+      {
+        "title": "Every Mind Matters: breathing and grounding practices",
+        "url": "https://m.youtube.com/%40everymindmatters1557/videos"
+      },
+      {
+        "title": "Guided Meditation for Inner Peace and Calm | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=_iGWdUTifIQ&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=3&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "10-Minute Meditation For Anxiety | Goodful",
+        "url": "https://www.youtube.com/watch?v=O-6f5wQXSu8&ab_channel=Goodful"
+      },
+      {
+        "title": "10-Minute Meditation For Sleep | Goodful",
+        "url": "https://www.youtube.com/watch?v=aEqlQvczMJQ&ab_channel=Goodful"
+      },
+      {
+        "title": "20 Minute Guided Meditation for Reducing Anxiety and Stress--Clear the Clutter to Calm Down",
+        "url": "https://www.youtube.com/watch?v=MIr3RsUWrdo&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "5 Simple & Effective Ways To Build Confidence | Self Care Summer",
+        "url": "https://www.youtube.com/watch?v=eQriuxa6iYI&ab_channel=CarrieRad"
+      },
+      {
+        "title": "Be Your Own Best Friend: Self-Compassion for Stress Reduction",
+        "url": "https://www.youtube.com/watch?v=hziQjRpV4cA&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=9&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      },
+      {
+        "title": "Brief Positive Meditation",
+        "url": "https://www.youtube.com/watch?v=m9yOH_ScVms&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=6&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      },
+      {
+        "title": "Heartbeat: A Mindfulness Exercise to Calm Your Emotions",
+        "url": "https://www.youtube.com/watch?v=3iUf73v92lI&ab_channel=ThePartnershipInEducation"
+      },
+      {
+        "title": "How to cope with anxiety - a relaxation technique | NHS",
+        "url": "https://www.youtube.com/watch?v=3cXGt2d1RyQ&ab_channel=NHS"
+      },
+      {
+        "title": "How To Meditate | Easy & Healthy Practices For Beginners",
+        "url": "https://www.youtube.com/watch?v=P4Mle7xuPIk&ab_channel=CarrieRad"
+      }
+    ],
+    "articles": [
+      {
+        "title": "Breathing exercises for stress (NHS)",
+        "url": "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/breathing-exercises-for-stress/"
+      },
+      {
+        "title": "Sleep and mood basics (MedlinePlus)",
+        "url": "https://medlineplus.gov/sleep.html"
+      },
+      {
+        "title": "What is mindfulness? (NHS)",
+        "url": "https://www.nhs.uk/mental-health/self-help/tips-and-support/mindfulness/"
+      },
+      {
+        "title": "Acceptance and Commitment Therapy overview (APA)",
+        "url": "https://www.apa.org/ptsd-guideline/patients-and-families/acceptance-commitment"
+      },
+      {
+        "title": "Cognitive defusion: seeing thoughts as thoughts (ACBS)",
+        "url": "https://contextualscience.org/technique_defusion"
+      },
+      {
+        "title": "Guided practices and resources (UC San Diego CFM)",
+        "url": "https://cih.ucsd.edu/mindfulness/guided-audio-video"
+      },
+      {
+        "title": "3 ways getting outside into nature helps improve your health",
+        "url": "https://health.ucdavis.edu/blog/cultivating-health/3-ways-getting-outside-into-nature-helps-improve-your-health/2023/05"
+      },
+      {
+        "title": "Being in natural light improves mood, increases happiness",
+        "url": "https://www.uclahealth.org/news/article/being-in-natural-light-improves-mood-increases-happiness"
+      },
+      {
+        "title": "Boosting Your Mood",
+        "url": "https://www.hopkinsmedicine.org/health/wellness-and-prevention/boosting-your-mood"
+      },
+      {
+        "title": "Building Better Mental Health",
+        "url": "https://www.helpguide.org/mental-health/wellbeing/building-better-mental-health"
+      },
+      {
+        "title": "How Food May Improve Your Mood",
+        "url": "https://www.ncbi.nlm.nih.gov/search/research-news/13453/"
+      },
+      {
+        "title": "How to Improve Mental Health",
+        "url": "https://medlineplus.gov/howtoimprovementalhealth.html"
+      },
+      {
+        "title": "How to improve your mental health",
+        "url": "https://www.medicalnewstoday.com/articles/how-to-improve-your-mental-health"
+      },
+      {
+        "title": "How to improve your mood",
+        "url": "https://www.livescience.com/how-to-improve-your-mood"
+      },
+      {
+        "title": "Mind & Mood",
+        "url": "https://www.health.harvard.edu/topics/mind-and-mood"
+      }
+    ]
+  },
+  "happy": {
+    "quotes": [
+      "Do more of what makes you come alive.",
+      "Happiness is not something ready made. It comes from your own actions.",
+      "Joy is not in things; it is in us.",
+      "Savor the good; let it sink in.",
+      "The best way to cheer yourself up is to try to cheer somebody else up.",
+      "The more you praise and celebrate your life, the more there is in life to celebrate.",
+      "\u201cA creative man is motivated by the desire to achieve, not by the desire to beat others.\u201d",
+      "\u201cAbandon anything about your life and habits that might be holding you back. Learn to create your own opportunities.\u201d",
+      "\u201cAlways deliver more than expected.\u201d",
+      "\u201cBe willing to be a beginner every single morning.\u201d",
+      "\u201cContinuous improvement is better than delayed perfection.\u201d",
+      "\u201cDefine success on your own terms, achieve it by your own rules, and build a life you\u2019re proud to live.\u201d",
+      "\u201cDo the best you can until you know better. Then when you know better, do better.\u201d",
+      "\u201cEighty percent of success is showing up.\u2019\u201d",
+      "\u201cEverything you can imagine is real.\u201d"
+    ],
+    "videos": [
+      {
+        "title": "Happiness Break: 5 Minutes of Gratitude (GGSC)",
+        "url": "https://greatergood.berkeley.edu/topic/gratitude"
+      },
+      {
+        "title": "Five Minute Journal: How-To",
+        "url": "https://www.youtube.com/watch?v=J5XJxvV8L6k"
+      },
+      {
+        "title": "Gratitude Practice: How to Start (TED\u2011Ed)",
+        "url": "https://www.youtube.com/watch?v=WPPPFqsECz0"
+      },
+      {
+        "title": "Kindness Meditation (UCLA MARC)",
+        "url": "https://www.youtube.com/watch?v=szt7f5NmE8Q"
+      },
+      {
+        "title": "Laugh More: Why It Matters (Tedx talk)",
+        "url": "https://www.youtube.com/watch?v=O_BpEAEU4Jc"
+      },
+      {
+        "title": "Random Acts of Kindness: The Science of Kindness",
+        "url": "https://www.youtube.com/watch?v=O9UByLyOjBM"
+      },
+      {
+        "title": "10x Healthy Habits That Will Change Your Life Forever | 2025",
+        "url": "https://www.youtube.com/watch?v=eT7F9W2en-8&ab_channel=SanneVloet"
+      },
+      {
+        "title": "15 Minute Meditation for Stress Relief and Building Confidence | Mindful Movement",
+        "url": "https://www.youtube.com/watch?v=-KMngzCWgTw&list=PLCQACBUblTbXfTb8c_SlZ5kynRAPxwHFD&index=8&ab_channel=TheMindfulMovement"
+      },
+      {
+        "title": "5 Healthy Morning Habits That Will Change Your Life Self Care Summer",
+        "url": "https://www.youtube.com/watch?v=KmLCllbY9OM&ab_channel=CarrieRad"
+      },
+      {
+        "title": "5 Simple & Effective Ways To Build Confidence | Self Care Summer",
+        "url": "https://www.youtube.com/watch?v=eQriuxa6iYI&ab_channel=CarrieRad"
+      },
+      {
+        "title": "Adopt the Thoughts That Bolster You!",
+        "url": "https://www.youtube.com/watch?v=ipQ_T506Urs&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=5&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      },
+      {
+        "title": "Better than Coffee?! One Minute Exercise to Energize!",
+        "url": "https://www.youtube.com/watch?v=mCQZkLa_blY&ab_channel=BreatheandFlow"
+      },
+      {
+        "title": "Brief Positive Meditation",
+        "url": "https://www.youtube.com/watch?v=m9yOH_ScVms&list=PLWXu8EHZjBYpQZi9bs3XwtAssXYlwbTZV&index=6&ab_channel=UCSFDept.ofPsychiatryandBehavioralSciences"
+      },
+      {
+        "title": "Doctor Explains: 6 Confidence Secrets to Build Self Esteem QUICKLY",
+        "url": "https://www.youtube.com/watch?v=n6PToxBdrVA&list=PLmNgDoNhKYeaYyhJL9vj0Vm0SNgyvcy_I&index=39&ab_channel=KimFoster%2CM.D"
+      },
+      {
+        "title": "Give me 8 minutes and I'll DELETE your fear of failure",
+        "url": "https://www.youtube.com/watch?v=Cw5bEL9rxXw&list=PLmNgDoNhKYeaYyhJL9vj0Vm0SNgyvcy_I&index=2&ab_channel=KimFoster%2CM.D"
+      }
+    ],
+    "articles": [
+      {
+        "title": "Positive emotions broaden attention and build resources (overview)",
+        "url": "https://positivepsychology.com/broaden-build-theory/"
+      },
+      {
+        "title": "Broaden\u2011and\u2011Build Theory of Positive Emotions (Fredrickson, 2001)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3122271/"
+      },
+      {
+        "title": "Expanding the science and practice of gratitude (GGSC)",
+        "url": "https://ggsc.berkeley.edu/what_we_do/major_initiatives/expanding_gratitude"
+      },
+      {
+        "title": "How gratitude changes your brain (Greater Good Science Center)",
+        "url": "https://greatergood.berkeley.edu/article/item/how_gratitude_changes_you_and_your_brain"
+      },
+      {
+        "title": "The broaden\u2011and\u2011build theory (review)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1693418/"
+      },
+      {
+        "title": "42 Scientifically Proven Ways to Improve Your Mood",
+        "url": "https://www.titlemax.com/discovery-center/scientifically-proven-ways-improve-your-mood/"
+      },
+      {
+        "title": "5 simple ways to improve low mood",
+        "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/wellbeing/improve-low-mood"
+      },
+      {
+        "title": "7 Mood Boosters That Don\u2019t Cost a Thing",
+        "url": "https://www.healthline.com/health/mental-health/mood-boosters#takeaway"
+      },
+      {
+        "title": "7 Mood-Boosting Self-Care Practices You Can Start Doing Today, According to Mental Health Experts",
+        "url": "https://www.realsimple.com/how-to-boost-mood-naturally-8756244"
+      },
+      {
+        "title": "A good morning routine for feeling your best",
+        "url": "https://www.optum.com/en/health-articles.html/healthy-mind/4-mood-boosting-mental-health-tips-start-your-day"
+      },
+      {
+        "title": "Being in natural light improves mood, increases happiness",
+        "url": "https://www.uclahealth.org/news/article/being-in-natural-light-improves-mood-increases-happiness"
+      },
+      {
+        "title": "Boosting Your Mood",
+        "url": "https://www.hopkinsmedicine.org/health/wellness-and-prevention/boosting-your-mood"
+      },
+      {
+        "title": "Building Better Mental Health",
+        "url": "https://www.helpguide.org/mental-health/wellbeing/building-better-mental-health"
+      },
+      {
+        "title": "Easy Ways to Improve Your Mood",
+        "url": "https://physicians.dukehealth.org/articles/easy-ways-improve-your-mood"
+      },
+      {
+        "title": "Five lifestyle changes to enhance your mood and mental health",
+        "url": "https://theconversation.com/five-lifestyle-changes-to-enhance-your-mood-and-mental-health-102650"
+      }
+    ]
+  }
+}

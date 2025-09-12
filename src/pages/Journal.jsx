@@ -57,15 +57,24 @@ const Journal = () => {
     return 'Amazing';
   };
 
-  const bandFromSentiment = (s) =>
+const bandFromSentiment = (s) =>
   s == null ? null : s <= -0.25 ? "sad" : s >= 0.25 ? "happy" : "neutral";
+
+const bandFromMood = (m) => (m <= 3 ? "sad" : m >= 8 ? "happy" : "neutral");
 
 const sentimentLabel = (b) =>
   b === "happy" ? "Happy" : b === "sad" ? "Sad" : "Neutral";
 
-const sentimentClass = (b) =>
-  b === "happy" ? "ai-happy" : b === "sad" ? "ai-sad" : "ai-neutral";
+const hybridBand = (mood, sScore) => {
+  const a = bandFromMood(mood);
+  const b = bandFromSentiment(sScore ?? 0);
+  return a === b ? a : "neutral";
+};
 
+const latest = entries[0] || null;
+const currentBand = latest
+  ? hybridBand(latest.mood, latest.sentimentScore ?? 0)
+  : null;
 
   return (
     <div className="container">

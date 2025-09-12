@@ -1,43 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import suggestions from '../utils/suggestions.json';
+import React, { useEffect, useState } from "react";
+import { getSuggestions } from "../api/entries";
 
-const SuggestedContent = ({ mood }) => {
-  const [content, setContent] = useState(null);
+const SuggestedContent = ({ band }) => {
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    // Match mood range
-    const match = suggestions.find(item =>
-      mood >= item.moodRange[0] && mood <= item.moodRange[1]
-    );
-    setContent(match);
-  }, [mood]);
+    let on = true;
+    if (!band) { setData(null); return; }
+    getSuggestions({ mood: band })
+      .then(({ data }) => { if (on) setData(data || null); })
+      .catch(() => { if (on) setData(null); });
+    return () => { on = false; };
+  }, [band]);
 
-  if (!content) return null;
+  if (!data || (!data.quote && !data.video && !data.article)) return null;
 
   return (
-    <div className="mt-8 border-t pt-6">
-      <h2 className="text-lg font-semibold mb-2">Suggested for You</h2>
+    <div className="card mt-4">
+      <h3 className="mb-2">Suggested for you</h3>
 
-      {content.quote && (
-        <p className="mb-2 italic text-indigo-700">“{content.quote}”</p>
+      {data.quote && (
+        <div className="mb-2 text-sm italic" style={{ color: "var(--text-secondary)" }}>
+          “{data.quote}”
+        </div>
       )}
 
-      {content.activity && (
-        <p className="mb-2">
-          <strong>Try this:</strong> {content.activity}
-        </p>
+      {data.video?.url && (
+        <div className="mb-1">
+          <a href={data.video.url} target="_blank" rel="noreferrer" className="text-sm"
+             style={{ color: "var(--accent-primary)", fontWeight: 600 }}>
+            {data.video.title || "Open video"} →
+          </a>
+        </div>
       )}
 
-      {content.video && (
-        <div className="mb-4">
-          <strong>Watch:</strong>{' '}
-          <a
-            href={content.video}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline"
-          >
-            Recommended video
+      {data.article?.url && (
+        <div>
+          <a href={data.article.url} target="_blank" rel="noreferrer" className="text-sm"
+             style={{ color: "var(--accent-primary)" }}>
+            {data.article.title || "Read article"} →
           </a>
         </div>
       )}

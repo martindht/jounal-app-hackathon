@@ -23,7 +23,7 @@ export const monthlySummary = (params = {}) => {
 
 export const dailyPrompts = () => api(`/api/v1/prompts/daily`);
 
-export const suggestions = (q = {}) => {
-  const qs = new URLSearchParams(q).toString();
-  return api(`/api/v1/suggestions${qs ? `?${qs}` : ""}`);
-};
+export function getSuggestions({ mood }) {
+  const qs = new URLSearchParams({ mood });
+  return api(`/api/v1/suggestions?${qs.toString()}`);
+}
